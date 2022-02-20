@@ -17,7 +17,7 @@ class CreateBankersTable extends Migration
     {
         Schema::create('bankers', function (Blueprint $table) {
             $table->id();
-            $table->double('value', 100);
+            $table->string('value', 20);
             $table->foreignIdFor(Village::class);
             $table->foreignIdFor(Subcategory::class);
             $table->year('year');

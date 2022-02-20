@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Login;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', Dashboard::class)->name('dashboard');
+Route::get('/login', Login::class)->name('login');
+Route::get('/logout', function() {
+    Session::flush();
+
+    Auth::logout();
+
+    return redirect('login');
+})->name('logout');
