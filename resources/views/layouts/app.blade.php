@@ -21,7 +21,7 @@
             <div class="flex flex-col flex-1 overflow-x-hidden">
                 <x-header.nav title=""></x-header.nav>
                 <main class="h-full overflow-y-auto pt-4">
-                    <div class="xl:container mb-6 px-4 md:px-6 lg:px-8 mx-auto">
+                    <div class="lg:container mb-6 px-8 mx-auto">
                         {{ $slot }}
                     </div>
                 </main>
@@ -31,6 +31,7 @@
         @livewire('livewire-ui-modal')
 
         @livewireScripts
+            <script src="{{ mix('js/livewire-handler.js') }}" defer></script>
         @stack('scripts')
     </body>
 </html>

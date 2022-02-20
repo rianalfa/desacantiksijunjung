@@ -13,4 +13,8 @@ class Subcategory extends Model
         'name',
         'category_id',
     ];
+
+    public function bankers() {
+        return $this->hasMany(Banker::class);
+    }
 }

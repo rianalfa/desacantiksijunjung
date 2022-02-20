@@ -15,4 +15,8 @@ class Banker extends Model
         'subcategory_id',
         'year',
     ];
+
+    public function subcategory() {
+        return $this->belongsTo(Subcategory::class);
+    }
 }
