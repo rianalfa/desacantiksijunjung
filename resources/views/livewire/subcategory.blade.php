@@ -41,24 +41,28 @@
                     @endphp
                 </x-button.white>
 
-                <ul x-show="open" @click.away="open = false" class="bg-white border border-gray-300 rounded absolute top-8 z-10 p-2">
-                    <li><x-button.white class="w-full px-2 py-1"
-                        wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => $subcategory->subcategory_id, 'categoryId' => $category->id]) }})">Edit</x-button.white></li>
-                    <li class="mt-2"><x-button.white class="w-full px-2 py-1"
-                        wire:click="$emit('openModal', 'banker-modal', {{ json_encode([
-                            'id' => !empty($banker) ? $banker->id : '',
-                            'villageId' => $village->id,
-                            'subcategoryId' => $subcategory->id,
-                            'year' => $year,
-                        ]) }})">Data</x-button.white></li>
-                    <li class="mt-2"><x-button.error class="w-full px-2 py-1"
-                        wire:click="$emit('openModal', 'subcategory-delete-modal', {{ json_encode(['id' => $subcategory->subcategory_id]) }})">Hapus</x-button.error></li>
-                </ul>
+                @auth
+                    <ul x-show="open" @click.away="open = false" class="bg-white border border-gray-300 rounded absolute top-8 z-10 p-2">
+                        <li><x-button.white class="w-full px-2 py-1"
+                            wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => $subcategory->subcategory_id, 'categoryId' => $category->id]) }})">Edit</x-button.white></li>
+                        <li class="mt-2"><x-button.white class="w-full px-2 py-1"
+                            wire:click="$emit('openModal', 'banker-modal', {{ json_encode([
+                                'id' => !empty($banker) ? $banker->id : '',
+                                'villageId' => $village->id,
+                                'subcategoryId' => $subcategory->id,
+                                'year' => $year,
+                            ]) }})">Data</x-button.white></li>
+                        <li class="mt-2"><x-button.error class="w-full px-2 py-1"
+                            wire:click="$emit('openModal', 'subcategory-delete-modal', {{ json_encode(['id' => $subcategory->subcategory_id]) }})">Hapus</x-button.error></li>
+                    </ul>
+                @endauth
             </div>
         @empty
             <p class="font-bold text-center mb-0">Belum ada subkategori.</p>
         @endforelse
     </div>
 
-    <x-button.success class="mt-10" wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => '', 'categoryId' => $category->id]) }})">+ Subategori</x-button.success>
+    @auth
+        <x-button.success class="mt-10" wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => '', 'categoryId' => $category->id]) }})">+ Subategori</x-button.success>
+    @endauth
 </x-card.full>
