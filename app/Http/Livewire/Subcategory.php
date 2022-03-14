@@ -15,6 +15,7 @@ class Subcategory extends Component
     public $village;
     public $villageId;
     public $year;
+    public $table;
 
     protected $listeners = [
         'reloadSubcategory' => 'reload',
@@ -26,6 +27,7 @@ class Subcategory extends Component
         $this->villageId = $this->village->id;
         $this->villages = Village::get();
         $this->year = '2021';
+        $this->table = true;
         $this->subcategories = ModelsSubcategory::where('category_id', $this->category->id)->get();
     }
 
@@ -37,6 +39,10 @@ class Subcategory extends Component
     public function changeVillage() {
         $this->village = Village::whereId($this->villageId)->first();
         $this->reload($this->category->id);
+    }
+
+    public function changeTable($bool) {
+        $this->table = $bool;
     }
 
     public function render()

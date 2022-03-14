@@ -3,7 +3,7 @@
     <x-modal.body>
         <div class="flex flex-col">
             @forelse ($villages as $village)
-                <div class="flex w-full">
+                <div class="flex w-full mt-4">
                     <p class="grow align-middle mb-0">{{ $village->name }}</p>
                     <x-button.white class="px-2 py-1"
                         wire:click="$emit('openModal', 'village-modal', {{ json_encode(['id' => $village->id]) }})">Edit</x-button.white>

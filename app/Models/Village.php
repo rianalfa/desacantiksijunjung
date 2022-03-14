@@ -15,4 +15,8 @@ class Village extends Model
         'code',
         'district_id',
     ];
+
+    public function bankers() {
+        return $this->hasMany(Banker::class);
+    }
 }
