@@ -27,9 +27,11 @@
                     </x-input.select>
                 </div>
             @else
-                <x-button.success wire:click="$emit('openModal', 'bankers-excel-modal', {{ json_encode(['year' => $year]) }})">
-                    Data Excel
-                </x-button.success>
+                @auth
+                    <x-button.success wire:click="$emit('openModal', 'bankers-excel-modal', {{ json_encode(['year' => $year]) }})">
+                        Data Excel
+                    </x-button.success>
+                @endauth
             @endif
 
             <div class="flex items-center ml-4">
@@ -74,7 +76,7 @@
                                     'year' => $year,
                                 ]) }})">Data</x-button.white></li>
                             <li class="mt-2"><x-button.error class="w-full px-2 py-1"
-                                wire:click="$emit('openModal', 'subcategory-delete-modal', {{ json_encode(['id' => $subcategory->subcategory_id]) }})">Hapus</x-button.error></li>
+                                wire:click="$emit('openModal', 'subcategory-delete-modal', {{ json_encode(['id' => $subcategory->id]) }})">Hapus</x-button.error></li>
                         </ul>
                     @endauth
                 </div>
