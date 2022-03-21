@@ -19,7 +19,7 @@ class BankersExcelModal extends ModalComponent
     public $year;
 
     protected $rules = [
-        'csv' => 'file|max:10000|mimes:csv',
+        'csv' => 'file|max:10000',
     ];
 
     public function mount($year) {
@@ -37,27 +37,32 @@ class BankersExcelModal extends ModalComponent
             for ($i=1; $i<sizeof($lines); $i++) {
                 $line = explode(',', $lines[$i]);
                 $village = Village::where('name', $line[0])->first();
-                for ($j=1; $j<sizeof($header); $j++) {
-                    $subcategory = Subcategory::where('name', $header[$j])->first();
-                    $banker = Banker::where('village_id', $village->id)
-                                    ->where('subcategory_id', $subcategory->id)
-                                    ->where('year', $this->year)
-                                    ->first() ?? new Banker();
 
-                    $banker->village_id = $village->id;
-                    $banker->subcategory_id = $subcategory->id;
-                    $banker->year = $this->year;
-                    $banker->value = $line[$j];
-                    $banker->save();
+                if (!empty($village)) {
+                    for ($j=1; $j<sizeof($header); $j++) {
+                        $subcategory = Subcategory::where('name', $header[$j])->first();
+                        $banker = Banker::where('village_id', $village->id)
+                                        ->where('subcategory_id', $subcategory->id)
+                                        ->where('year', $this->year)
+                                        ->first() ?? new Banker();
+
+                        $banker->village_id = $village->id;
+                        $banker->subcategory_id = $subcategory->id;
+                        $banker->year = $this->year;
+                        $banker->value = $line[$j];
+                        $banker->save();
+                    }
                 }
             }
 
             Storage::delete('bankers.csv');
 
             $this->emit('success', 'Data berhasil disimpan');
+            $this->emitTo('subcategory', 'reloadSubcategory', $subcategory->category_id);
         } catch (Exception $e) {
             $this->emit('error', 'Data gagal disimpan');
         }
+        $this->emit('closeModal');
     }
 
     public function render()
