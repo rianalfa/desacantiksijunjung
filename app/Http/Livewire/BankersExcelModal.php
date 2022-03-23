@@ -19,7 +19,7 @@ class BankersExcelModal extends ModalComponent
     public $year;
 
     protected $rules = [
-        'csv' => 'file|max:10000',
+        'csv' => 'file|max:10000|mimes:csv',
     ];
 
     public function mount($year) {
@@ -41,16 +41,19 @@ class BankersExcelModal extends ModalComponent
                 if (!empty($village)) {
                     for ($j=1; $j<sizeof($header); $j++) {
                         $subcategory = Subcategory::where('name', $header[$j])->first();
-                        $banker = Banker::where('village_id', $village->id)
-                                        ->where('subcategory_id', $subcategory->id)
-                                        ->where('year', $this->year)
-                                        ->first() ?? new Banker();
 
-                        $banker->village_id = $village->id;
-                        $banker->subcategory_id = $subcategory->id;
-                        $banker->year = $this->year;
-                        $banker->value = $line[$j];
-                        $banker->save();
+                        if (!empty($subcategory)) {
+                            $banker = Banker::where('village_id', $village->id)
+                                            ->where('subcategory_id', $subcategory->id)
+                                            ->where('year', $this->year)
+                                            ->first() ?? new Banker();
+
+                            $banker->village_id = $village->id;
+                            $banker->subcategory_id = $subcategory->id;
+                            $banker->year = $this->year;
+                            $banker->value = $line[$j];
+                            $banker->save();
+                        }
                     }
                 }
             }
