@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Dashboard;
 use App\Http\Livewire\Login;
+use App\Http\Livewire\Village;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', Dashboard::class)->name('dashboard');
+Route::get('/desa', Village::class)->name('desa');
 Route::get('/login', Login::class)->name('login');
 Route::get('/logout', function() {
     Session::flush();

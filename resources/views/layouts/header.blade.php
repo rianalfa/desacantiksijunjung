@@ -11,13 +11,11 @@
                             {{ $title }}
                         </div>
                     </div>
-                    @auth
-                        <div class="md:block ">
-                            <div class="ml-10 flex items-stretch space-x-4 h-16">
-                                {{ $slot }}
-                            </div>
+                    <div class="md:block ">
+                        <div class="ml-10 flex items-stretch space-x-4 h-16">
+                            {{ $slot }}
                         </div>
-                    @endauth
+                    </div>
                 </div>
                 @auth
                     <div class="flex">

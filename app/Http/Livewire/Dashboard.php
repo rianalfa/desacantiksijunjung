@@ -25,6 +25,7 @@ class Dashboard extends Component
 
     public function changeCategory($id) {
         $this->selectedCategoryId = $id;
+        $this->emitTo('subcategory', 'changeTable', true);
         $this->emitTo('subcategory', 'reloadSubcategory', $id);
     }
 

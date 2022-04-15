@@ -41,16 +41,9 @@
         </x-card.base>
     </div>
 
-    <div class="col-span-3">
+    <div class="col-span-4 lg:col-span-3">
         @if (!empty($selectedCategoryId))
             @livewire('subcategory', ['categoryId' => $selectedCategoryId])
         @endif
     </div>
-
-    @auth
-        <div class="fixed bottom-12 right-12">
-            <x-button.black wire:click="$emit('openModal', 'village')">Daftar Desa</x-button.black>
-            <x-button.success wire:click="$emit('openModal', 'village-modal', {{ json_encode(['id' => '']) }})">+ Desa</x-button.success>
-        </div>
-    @endauth
 </div>

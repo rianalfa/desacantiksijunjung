@@ -18,6 +18,7 @@ class VillageModal extends ModalComponent
         'village.name' => 'required|max:50|unique:villages,name',
         'village.code' => 'required|integer',
         'village.district_id' => 'required|exists:districts,id',
+        'village.description' => 'nullable',
     ];
 
     public function mount($id) {

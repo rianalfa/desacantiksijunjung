@@ -25,6 +25,10 @@
             </x-input.select>
             <x-input.error for="village.district_id" />
         </x-input.wrapper>
+        <x-input.wrapper class="mt-2">
+            <x-input.label for="village.description" value="Deskripsi" />
+            <x-input.textarea name="village.description" wire:model.defer="village.description"></x-input.textarea>
+        </x-input.wrapper>
     </x-modal.body>
     <x-modal.footer class="justify-end">
         <x-button.success wire:click="saveVillage">Simpan</x-button.success>

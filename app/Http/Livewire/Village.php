@@ -4,9 +4,8 @@ namespace App\Http\Livewire;
 
 use App\Models\Village as ModelsVillage;
 use Livewire\Component;
-use LivewireUI\Modal\ModalComponent;
 
-class Village extends ModalComponent
+class Village extends Component
 {
     public $villages;
 

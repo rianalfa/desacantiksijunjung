@@ -1,6 +1,6 @@
 <x-card.full>
     <p class="text-xl text-center font-bold">Kategori {{ $category->name }}</p>
-    <div class="flex justify-between">
+    <div class="flex flex-col lg:flex-row lg:justify-between">
         <div class="inline-flex">
             @if ($table==false)
                 <x-button.white wire:click="changeTable(false)"
@@ -14,7 +14,7 @@
                     class="rounded-l-none">{{__('Table')}}</x-button.white>
             @endif
         </div>
-        <div class="flex">
+        <div class="flex flex-col lg:flex-row">
             @if ($table==false)
                 <div class="flex items-center">
                     <x-input.label for="villageId" value="Desa" />
@@ -34,7 +34,7 @@
                 @endauth
             @endif
 
-            <div class="flex items-center ml-4">
+            <div class="flex items-center lg:ml-4">
                 <x-input.label for="year" value="Tahun" />
                 <x-input.select name="year" wire:model.defer="year" wire:change="$emit('reloadSubcategory', {{ $category->id }})" wire:ignore class="ml-2">
                     <option value="2018">2018</option>
@@ -47,38 +47,40 @@
             </div>
         </div>
     </div>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
         @if ($table==false)
             @forelse ($subcategories as $subcategory)
-                <div x-data="{ open: false }" class="flex justify-center relative">
-                    <x-button.white class="w-64 py-6" @click="open = true">
-                        <p class="font-bold">{{ $subcategory->name }}</p>
-                        <img src="{{ asset('storage/images/subcategory/'.$subcategory->id.'.png') }}" alt="."
-                            class="w-32 h-32 object-contain mx-auto">
-                        @php
-                            $banker = $subcategory->bankers()
-                                                ->where('village_id', $village->id)
-                                                ->where('year', $year)
-                                                ->first();
-                            echo !empty($banker) ? $banker->value : '-'
-                        @endphp
-                    </x-button.white>
+                <div class="col-span-1">
+                    <div x-data="{ open: false }" class="flex justify-center relative">
+                        <x-button.white class="w-full py-6" @click="open = true">
+                            <p class="font-bold">{{ $subcategory->name }}</p>
+                            <img src="{{ asset('storage/images/subcategory/'.$subcategory->id.'.png') }}" alt="."
+                                class="w-32 h-32 object-contain mx-auto">
+                            @php
+                                $banker = $subcategory->bankers()
+                                                    ->where('village_id', $village->id)
+                                                    ->where('year', $year)
+                                                    ->first();
+                                echo !empty($banker) ? $banker->value : '-'
+                            @endphp
+                        </x-button.white>
 
-                    @auth
-                        <ul x-show="open" @click.away="open = false" class="bg-white border border-gray-300 rounded absolute top-8 z-10 p-2">
-                            <li><x-button.white class="w-full px-2 py-1"
-                                wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => $subcategory->subcategory_id, 'categoryId' => $category->id]) }})">Edit</x-button.white></li>
-                            <li class="mt-2"><x-button.white class="w-full px-2 py-1"
-                                wire:click="$emit('openModal', 'banker-modal', {{ json_encode([
-                                    'id' => !empty($banker) ? $banker->id : '',
-                                    'villageId' => $village->id,
-                                    'subcategoryId' => $subcategory->id,
-                                    'year' => $year,
-                                ]) }})">Data</x-button.white></li>
-                            <li class="mt-2"><x-button.error class="w-full px-2 py-1"
-                                wire:click="$emit('openModal', 'subcategory-delete-modal', {{ json_encode(['id' => $subcategory->id]) }})">Hapus</x-button.error></li>
-                        </ul>
-                    @endauth
+                        @auth
+                            <ul x-show="open" @click.away="open = false" class="bg-white border border-gray-300 rounded absolute top-8 z-10 p-2">
+                                <li><x-button.white class="w-full px-2 py-1"
+                                    wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => $subcategory->subcategory_id, 'categoryId' => $category->id]) }})">Edit</x-button.white></li>
+                                <li class="mt-2"><x-button.white class="w-full px-2 py-1"
+                                    wire:click="$emit('openModal', 'banker-modal', {{ json_encode([
+                                        'id' => !empty($banker) ? $banker->id : '',
+                                        'villageId' => $village->id,
+                                        'subcategoryId' => $subcategory->id,
+                                        'year' => $year,
+                                    ]) }})">Data</x-button.white></li>
+                                <li class="mt-2"><x-button.error class="w-full px-2 py-1"
+                                    wire:click="$emit('openModal', 'subcategory-delete-modal', {{ json_encode(['id' => $subcategory->id]) }})">Hapus</x-button.error></li>
+                            </ul>
+                        @endauth
+                    </div>
                 </div>
             @empty
                 <p class="font-bold text-center mb-0">Belum ada subkategori.</p>
@@ -142,6 +144,11 @@
             @endif
         @endif
     </div>
+    @if($table==false)
+        <div class="flex justify-center h-72 lg:h-96 mt-8">
+            <livewire:livewire-pie-chart :pie-chart-model="$chart" />
+        </div>
+    @endif
 
     @auth
         <x-button.success class="mt-10" wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => '', 'categoryId' => $category->id]) }})">+ Subategori</x-button.success>
