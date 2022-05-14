@@ -148,6 +148,25 @@
         <div class="flex justify-center h-72 lg:h-96 mt-8">
             <livewire:livewire-pie-chart :pie-chart-model="$chart" />
         </div>
+    @else
+        <div class="grid grid-cols-2 gap-4 mt-8">
+            @foreach($villagesCharts as $key => $villagesChart)
+                <div class="flex flex-col">
+                    <div class="flex justify-center h-48 lg:h-72">
+                        <livewire:livewire-pie-chart :pie-chart-model="$villagesChart" />
+                    </div>
+                    <p class="font-bold mx-auto">{{ $key }}</p>
+                </div>
+            @endforeach
+            <div class="col-span-2 grid grid-cols-4 gap-4">
+                @foreach ($villages as $village)
+                    <div class="flex justify-center items-center space-x-4">
+                        <div class="border w-4 h-4" style="background-color: #{{ $village->color }};"></div>
+                        <p class="font-bold grow">{{ $village->name }}</p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
     @endif
 
     @auth

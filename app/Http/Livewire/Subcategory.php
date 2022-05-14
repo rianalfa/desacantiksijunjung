@@ -19,6 +19,7 @@ class Subcategory extends Component
     public $table;
     public $changeChart;
     private $chart;
+    private $villagesCharts;
 
     protected $listeners = [
         'reloadSubcategory' => 'reload',
@@ -34,12 +35,14 @@ class Subcategory extends Component
         $this->table = true;
         $this->subcategories = ModelsSubcategory::where('category_id', $this->category->id)->get();
         $this->changeChart = true;
+        $this->villagesCharts = [];
     }
 
     public function reload($categoryId) {
         $this->category = Category::whereId($categoryId)->first();
         $this->subcategories = ModelsSubcategory::where('category_id', $this->category->id)->get();
         $this->buildChart();
+        $this->buildVillageCharts();
     }
 
     public function buildChart() {
@@ -53,10 +56,34 @@ class Subcategory extends Component
                                 ->where('village_id', $this->village->id)
                                 ->where('year', $this->year)
                                 ->first();
-            $value = (!empty($banker) && !empty($banker->value)) ? $banker->value : 0;
+            $value = $banker->value ?? 0;
 
             $color = dechex(rand(0x000000, 0xFFFFFF));
             $this->chart->addSlice($subcategory->name, (int)$value, '#'.$color);
+        }
+    }
+
+    public function buildVillageCharts() {
+        foreach ($this->villages as $village) {
+            $village->color = dechex(rand(0x000000, 0xFFFFFF));
+        }
+
+        foreach ($this->subcategories as $subcategory) {
+            $chart = new PieChartModel();
+            $chart->setAnimated(true)
+                ->withoutLegend();
+
+            foreach ($this->villages as $village) {
+                $banker = $subcategory->bankers()
+                                    ->where('village_id', $village->id)
+                                    ->where('year', $this->year)
+                                    ->first();
+                $value = $banker->value ?? 0;
+
+                $chart->addSlice($village->name, (int)$value, '#'.$village->color);
+            }
+
+            $this->villagesCharts[$subcategory->name] = $chart;
         }
     }
 
@@ -67,11 +94,15 @@ class Subcategory extends Component
 
     public function changeTable($bool) {
         $this->table = $bool;
+        $this->reload($this->category->id);
     }
 
     public function render()
     {
         $this->reload($this->category->id);
-        return view('livewire.subcategory', ['chart' => $this->chart]);
+        return view('livewire.subcategory', [
+            'chart' => $this->chart,
+            'villagesCharts' => $this->villagesCharts,
+        ]);
     }
 }
