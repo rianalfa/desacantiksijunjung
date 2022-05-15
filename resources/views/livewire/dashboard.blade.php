@@ -6,13 +6,13 @@
                     @forelse ($categories as $category)
                         <div class="flex mt-4">
                             @if ($category->id==$selectedCategoryId)
-                                <x-button.black class="grow" wire:click="changeCategory({{ $category->id }})">
+                                <x-anchor.black class="grow" href="#">
                                     {{ $category->name }}
-                                </x-button.black>
+                                </x-anchor.black>
                             @else
-                                <x-button.white class="grow" wire:click="changeCategory({{ $category->id }})">
+                                <x-anchor.white class="grow" href="{{ route('kategori', ['id' => $category->id]) }}">
                                     {{ $category->name }}
-                                </x-button.white>
+                                </x-anchor.white>
                             @endif
 
                             @auth

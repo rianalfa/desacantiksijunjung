@@ -14,19 +14,17 @@ class Dashboard extends Component
         'reloadDashboard' => 'reload',
     ];
 
-    public function mount() {
+    public function mount($id=NULL) {
         $this->categories = Category::get();
-        $this->selectedCategoryId = !empty($this->categories[0]) ? $this->categories[0]->id : '';
+        if (!empty($id)) {
+            $this->selectedCategoryId = $id;
+        } else {
+            $this->selectedCategoryId = !empty($this->categories[0]) ? $this->categories[0]->id : '';
+        }
     }
 
     public function reload() {
         $this->categories = Category::get();
-    }
-
-    public function changeCategory($id) {
-        $this->selectedCategoryId = $id;
-        $this->emitTo('subcategory', 'changeTable', true);
-        $this->emitTo('subcategory', 'reloadSubcategory', $id);
     }
 
     public function render()
