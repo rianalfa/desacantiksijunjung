@@ -10,14 +10,16 @@ class Dashboard extends Component
     public $categories;
     public $selectedCategoryId;
     public $year;
+    public $villageId;
 
     protected $listeners = [
         'reloadDashboard' => 'reload',
     ];
 
-    public function mount($id=NULL, $year='2021') {
+    public function mount($id=NULL, $year='2021', $villageId=1) {
         $this->categories = Category::get();
         $this->year = $year;
+        $this->villageId = $villageId;
         if (!empty($id)) {
             $this->selectedCategoryId = $id;
         } else {

@@ -26,9 +26,9 @@ class Subcategory extends Component
         'changeTable' => 'changeTable',
     ];
 
-    public function mount($categoryId, $year) {
+    public function mount($categoryId, $year, $villageId) {
         $this->category = Category::whereId($categoryId)->first();
-        $this->village = Village::first();
+        $this->village = Village::whereId($villageId)->first() ?? Village::first();
         $this->villageId = $this->village->id;
         $this->villages = Village::get();
         $this->year = $year;
@@ -85,15 +85,6 @@ class Subcategory extends Component
 
             $this->villagesCharts[$subcategory->name] = $chart;
         }
-    }
-
-    public function changeVillage() {
-        $this->village = Village::whereId($this->villageId)->first();
-        $this->reload($this->category->id);
-    }
-
-    public function changeYear() {
-        $this->emit('success', (string)$this->year);
     }
 
     public function changeTable($bool) {

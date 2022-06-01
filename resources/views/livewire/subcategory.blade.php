@@ -17,14 +17,19 @@
         <div class="flex flex-col lg:flex-row">
             @if ($table==false)
                 <div class="flex items-center">
-                    <x-input.label for="villageId" value="Desa" />
-                    <x-input.select name="villageId" wire:model.defer="villageId" wire:change="changeVillage" class="ml-2">
-                        @forelse ($villages as $v)
-                            <option value="{{ $v->id }}">{{ $v->name }}</option>
-                        @empty
-                            <option selected hidden></option>
-                        @endforelse
-                    </x-input.select>
+                    <div x-data="{ open: false }" class="relative">
+                        <x-button.white @click="open = true">Desa</x-button.white>
+
+                        <x-card.base x-show="open" @click.outside="open = false" class="absolute top-10 right-0 z-50">
+                            <div class="flex flex-col w-48 max-h-40 overflow-y-auto">
+                                @forelse ($villages as $v)
+                                    <a href="{{ route('kategori', ['id' => $category->id, 'year' => $year, 'villageId' => $v->id]) }}">{{ $v->name }}</a>
+                                @empty
+                                    <div></div>
+                                @endforelse
+                            </div>
+                        </x-card.base>
+                    </div>
                 </div>
             @else
                 @auth
@@ -35,11 +40,10 @@
             @endif
 
             <div class="flex items-center lg:ml-4">
-                <x-input.label for="year" value="Tahun" />
                 <div x-data="{ open: false }" class="relative">
-                    <x-button.white class="ml-2" @click="open = true">{{ $year }}</x-button.white>
+                    <x-button.white @click="open = true">{{ $year }}</x-button.white>
 
-                    <x-card.base x-show="open" @click.outside="open = false" class="absolute top-10 left-2">
+                    <x-card.base x-show="open" @click.outside="open = false" class="absolute top-10 left-0 z-50">
                         <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2018']) }}">2018</a>
                         <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2019']) }}">2019</a>
                         <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2020']) }}">2020</a>
@@ -56,7 +60,7 @@
             @forelse ($subcategories as $subcategory)
                 <div class="col-span-1">
                     <div x-data="{ open: false }" class="flex justify-center relative">
-                        <x-button.white class="w-full py-6" @click="open = true">
+                        <x-button.white class="w-full py-6 z-10" @click="open = true">
                             <p class="font-bold">{{ $subcategory->name }}</p>
                             <img src="{{ asset('storage/images/subcategory/'.$subcategory->id.'.png') }}" alt="."
                                 class="w-32 h-32 object-contain mx-auto">
@@ -70,7 +74,7 @@
                         </x-button.white>
 
                         @auth
-                            <ul x-show="open" @click.away="open = false" class="bg-white border border-gray-300 rounded absolute top-8 z-10 p-2">
+                            <ul x-show="open" @click.away="open = false" class="bg-white border border-gray-300 rounded absolute top-8 z-20 p-2">
                                 <li><x-button.white class="w-full px-2 py-1"
                                     wire:click="$emit('openModal', 'subcategory-modal', {{ json_encode(['id' => $subcategory->subcategory_id, 'categoryId' => $category->id]) }})">Edit</x-button.white></li>
                                 <li class="mt-2"><x-button.white class="w-full px-2 py-1"
