@@ -26,12 +26,12 @@ class Subcategory extends Component
         'changeTable' => 'changeTable',
     ];
 
-    public function mount($categoryId) {
+    public function mount($categoryId, $year) {
         $this->category = Category::whereId($categoryId)->first();
         $this->village = Village::first();
         $this->villageId = $this->village->id;
         $this->villages = Village::get();
-        $this->year = '2021';
+        $this->year = $year;
         $this->table = true;
         $this->subcategories = ModelsSubcategory::where('category_id', $this->category->id)->get();
         $this->changeChart = true;
@@ -90,6 +90,10 @@ class Subcategory extends Component
     public function changeVillage() {
         $this->village = Village::whereId($this->villageId)->first();
         $this->reload($this->category->id);
+    }
+
+    public function changeYear() {
+        $this->emit('success', (string)$this->year);
     }
 
     public function changeTable($bool) {

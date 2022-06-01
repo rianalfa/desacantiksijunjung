@@ -36,14 +36,18 @@
 
             <div class="flex items-center lg:ml-4">
                 <x-input.label for="year" value="Tahun" />
-                <x-input.select name="year" wire:model.defer="year" wire:change="$emit('reloadSubcategory', {{ $category->id }})" wire:ignore class="ml-2">
-                    <option value="2018">2018</option>
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                </x-input.select>
+                <div x-data="{ open: false }" class="relative">
+                    <x-button.white class="ml-2" @click="open = true">{{ $year }}</x-button.white>
+
+                    <x-card.base x-show="open" @click.outside="open = false" class="absolute top-10 left-2">
+                        <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2018']) }}">2018</a>
+                        <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2019']) }}">2019</a>
+                        <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2020']) }}">2020</a>
+                        <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2021']) }}">2021</a>
+                        <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2022']) }}">2022</a>
+                        <a href="{{ route('kategori', ['id' => $category->id, 'year' => '2023']) }}">2023</a>
+                    </x-card.base>
+                </div>
             </div>
         </div>
     </div>

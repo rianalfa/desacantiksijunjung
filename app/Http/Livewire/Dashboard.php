@@ -9,13 +9,15 @@ class Dashboard extends Component
 {
     public $categories;
     public $selectedCategoryId;
+    public $year;
 
     protected $listeners = [
         'reloadDashboard' => 'reload',
     ];
 
-    public function mount($id=NULL) {
+    public function mount($id=NULL, $year='2021') {
         $this->categories = Category::get();
+        $this->year = $year;
         if (!empty($id)) {
             $this->selectedCategoryId = $id;
         } else {

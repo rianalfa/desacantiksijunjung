@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Session;
 */
 
 Route::get('/', Dashboard::class)->name('dashboard');
-Route::get('/kategori/{id?}', Dashboard::class)->name('kategori');
+Route::get('/kategori/{id?}/{year?}', Dashboard::class)->name('kategori');
 Route::get('/desa', Village::class)->name('desa');
 Route::get('/login', Login::class)->name('login');
 Route::get('/logout', function() {

@@ -43,7 +43,7 @@
 
     <div class="col-span-4 lg:col-span-3">
         @if (!empty($selectedCategoryId))
-            @livewire('subcategory', ['categoryId' => $selectedCategoryId])
+            @livewire('subcategory', ['categoryId' => $selectedCategoryId, 'year' => $year])
         @endif
     </div>
 </div>
