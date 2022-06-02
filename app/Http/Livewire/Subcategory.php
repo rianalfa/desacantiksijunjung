@@ -32,7 +32,7 @@ class Subcategory extends Component
         $this->villageId = $this->village->id;
         $this->villages = Village::get();
         $this->year = $year;
-        $this->table = true;
+        $this->table = false;
         $this->subcategories = ModelsSubcategory::where('category_id', $this->category->id)->get();
         $this->changeChart = true;
         $this->villagesCharts = [];
