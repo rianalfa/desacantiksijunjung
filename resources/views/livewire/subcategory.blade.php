@@ -18,7 +18,7 @@
             @if ($table==false)
                 <div class="flex items-center">
                     <div x-data="{ open: false }" class="relative">
-                        <x-button.white @click="open = true">Desa</x-button.white>
+                        <x-button.white @click="open = true">Desa {{ $village->name }}</x-button.white>
 
                         <x-card.base x-show="open" @click.outside="open = false" class="absolute top-10 right-0 z-50">
                             <div class="flex flex-col w-48 max-h-40 overflow-y-auto">
