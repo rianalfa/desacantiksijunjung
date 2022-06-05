@@ -82,7 +82,6 @@ class Subcategory extends Component
 
                 $chart->addSlice($village->name, (int)$value, '#'.$village->color);
             }
-
             $this->villagesCharts[$subcategory->name] = $chart;
         }
     }

@@ -161,7 +161,7 @@
             @foreach($villagesCharts as $key => $villagesChart)
                 <div class="flex flex-col">
                     <div class="flex justify-center h-48 lg:h-72">
-                        <livewire:livewire-pie-chart :pie-chart-model="$villagesChart" />
+                        <livewire:livewire-pie-chart key="chart{{ $key}}" :pie-chart-model="$villagesChart" />
                     </div>
                     <p class="font-bold mx-auto">{{ $key }}</p>
                 </div>
