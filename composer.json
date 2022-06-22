@@ -13,8 +13,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.10",
-        "rappasoft/laravel-livewire-tables": "^1.24",
+        "livewire/livewire": "^2.5",
+        "rappasoft/laravel-livewire-tables": "^1.23",
         "wire-elements/modal": "^1.0"
     },
     "require-dev": {
@@ -60,7 +60,11 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0.19"
+        }
+
     },
     "minimum-stability": "dev",
     "prefer-stable": true
