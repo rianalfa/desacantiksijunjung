@@ -19,7 +19,7 @@ class CreateVillagesTable extends Migration
             $table->string('id_desa', 10);
             $table->string('name', 50);
             $table->unsignedTinyInteger('code');
-            $tabl e->foreignIdFor(District::class);
+            $table->foreignIdFor(District::class);
             $table->timestamps();
         });
     }
