@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Category;
-use Asantibanez\LivewireCharts\Models\PieChartModel;
+use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use App\Models\Subcategory as ModelsSubcategory;
 use App\Models\Village;
 use Livewire\Component;
@@ -46,7 +46,7 @@ class Subcategory extends Component
     }
 
     public function buildChart() {
-        $this->chart = new PieChartModel();
+        $this->chart = new ColumnChartModel();
         $this->chart
             ->setAnimated(true)
             ->withLegend();
@@ -59,7 +59,7 @@ class Subcategory extends Component
             $value = $banker->value ?? 0;
 
             $color = dechex(rand(0x000000, 0xFFFFFF));
-            $this->chart->addSlice($subcategory->name, (int)$value, '#'.$color);
+            $this->chart->addColumn($subcategory->name, (int)$value, '#'.$color);
         }
     }
 
@@ -69,7 +69,7 @@ class Subcategory extends Component
         }
 
         foreach ($this->subcategories as $subcategory) {
-            $chart = new PieChartModel();
+            $chart = new ColumnChartModel();
             $chart->setAnimated(true)
                 ->withoutLegend();
 
@@ -80,7 +80,7 @@ class Subcategory extends Component
                                     ->first();
                 $value = $banker->value ?? 0;
 
-                $chart->addSlice($village->name, (int)$value, '#'.$village->color);
+                $chart->addColumn($village->name, (int)$value, '#'.$village->color);
             }
             $this->villagesCharts[$subcategory->name] = $chart;
         }

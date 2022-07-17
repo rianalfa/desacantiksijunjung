@@ -154,14 +154,14 @@
     </div>
     @if($table==false)
         <div class="flex justify-center h-72 lg:h-96 mt-8">
-            <livewire:livewire-pie-chart :pie-chart-model="$chart" />
+            <livewire:livewire-column-chart :column-chart-model="$chart" />
         </div>
     @else
         <div class="grid grid-cols-2 gap-4 mt-8">
             @foreach($villagesCharts as $key => $villagesChart)
                 <div class="flex flex-col">
                     <div class="flex justify-center h-48 lg:h-72">
-                        <livewire:livewire-pie-chart key="chart{{ $key}}" :pie-chart-model="$villagesChart" />
+                        <livewire:livewire-column-chart key="chart{{ $key}}" :column-chart-model="$villagesChart" />
                     </div>
                     <p class="font-bold mx-auto">{{ $key }}</p>
                 </div>
